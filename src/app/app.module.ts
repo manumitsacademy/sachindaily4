@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatTableModule} from '@angular/material/table';
 import { AppComponent } from './app.component';
 import { ReportModule } from './report/report.module';
 import { SharedModule } from './shared/shared.module';
@@ -15,7 +16,9 @@ import { HttpClientModule } from '@angular/common/http';
     ReportModule,
     SharedModule,
     HttpClientModule,
-    RouterModule.forRoot([])
+    RouterModule.forRoot([]),
+    BrowserAnimationsModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]
