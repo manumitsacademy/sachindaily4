@@ -11,8 +11,9 @@ export class ReportService {
   pauseDeliveryUrl = "https://api.mlab.com/api/1/databases/sachindaily/collections/pauseDelivery";
   apiKey="ClSj0HxNv3sPJwS3cZOsbZI9exWxVjqz"
   userUrl="https://api.mlab.com/api/1/databases/sachindaily/collections/user"//?q={"active": true}&fo=true&apiKey=myAPIKey"
-  getAllSubscriptions(){
-    return this.http.get(`${this.url}?s={${"wing"}:1}&apiKey=${this.apiKey}`).pipe(map((res)=>{
+  getAllSubscriptions(sdate){
+    console.log(sdate);
+    return this.http.get(`${this.url}?q={startDate:{$lte:'${sdate}'},endDate:{$gte:'${sdate}'}}&s={${"wing"}:1}&apiKey=${this.apiKey}`).pipe(map((res)=>{
       return Object.keys(res).map((i)=>{return res[i]});      
     }))
   }
