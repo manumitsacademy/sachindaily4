@@ -13,7 +13,9 @@ export class BillingHomeComponent implements OnInit {
   mobileNumbers=[];
   products=[];
   productIds=[];
+  mobileWiseData;
   deliveredProductsData={};
+  totalBill=0;
   ngOnInit() {
     this.dS.getAllDeliveries().subscribe(res=>{
       console.log("All deliveries::",res);
@@ -38,6 +40,7 @@ export class BillingHomeComponent implements OnInit {
         }
       }
       console.log(x);
+      this.mobileWiseData=x;
       console.log(this.deliveredProductsData);
       console.log(this.mobileNumbers);
       this.products=_.indexBy(this.products,'productId');
@@ -45,5 +48,11 @@ export class BillingHomeComponent implements OnInit {
       console.log(this.productIds)
     })
   }
-
+  monthBill(data){
+    this.totalBill=0;
+    data.forEach((a)=>{
+      this.totalBill += a.cost*a.quantity;
+    })   
+    return this.totalBill;
+  }
 }
