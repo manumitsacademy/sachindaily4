@@ -4,6 +4,9 @@ import { _ } from 'underscore';
 import * as jspdf from 'jspdf';    
 import * as  html2canvas from 'html2canvas';  
 import { Router, ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { DeliveryService } from 'src/app/delivery/delivery.service';
 @Component({
   selector: 'app-wing-wise-report',
   templateUrl: './wing-wise-report.component.html',
@@ -11,8 +14,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class WingWiseReportComponent implements OnInit {
  
-  constructor(public reportService:ReportService,public aR:ActivatedRoute) { }
-  
+  constructor(public reportService:ReportService,public aR:ActivatedRoute,
+              public dS:DeliveryService) { }
+  deliveryStatus;
+  deliveryStatusFlag;
   generatePDF(s){
     html2canvas(document.getElementById(s)).then((canvas)=>{
       // Few necessary setting options  
@@ -40,11 +45,25 @@ export class WingWiseReportComponent implements OnInit {
   selectedDate;
   ngOnInit() {
     this.aR.queryParams.subscribe((res)=>{
-      this.selectedDate=new Date(res.year,res.month-1,res.day);
-      console.log(this.selectedDate.getTime());
+      this.selectedDate=((new Date(res.year,res.month-1,res.day)).getTime())/1000;
+      console.log(this.selectedDate);
       this.selectedDateSubscriptions();
+      this.getDeliveryStatus(this.selectedDate);
     })
     
+  }
+  getDeliveryStatus(date){
+    this.dS.getDeliveryStatusByDate(date).then((res)=>{      
+      this.deliveryStatus = res;
+      console.log("this.deliveryStatus",this.deliveryStatus)
+    })
+  }
+  delivered(){
+    console.log("this.selectedDate",this.selectedDate);    
+    this.dS.addDeliveryStatus(this.selectedDate).subscribe((res)=>{
+      this.deliveryStatus = 'delivered';
+      this.dS.addDeliveries(this.selectedDate,this.products);
+    })
   }
   selectedDateSubscriptions(){
     this.wingWiseData={};
@@ -55,7 +74,7 @@ export class WingWiseReportComponent implements OnInit {
     this.productWiseData={};
     this.finalWingWiseReport=[];
     this.subscriptions=[];
-    this.reportService.getAllSubscriptions(this.selectedDate.getTime()/1000).subscribe((subscriptions)=>{
+    this.reportService.getAllSubscriptions(this.selectedDate).subscribe((subscriptions)=>{
       this.subscriptions=subscriptions;
       subscriptions.forEach((i,index)=>{
         var key;

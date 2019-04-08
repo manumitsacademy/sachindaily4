@@ -1,6 +1,9 @@
 
 <div class="container" id="wingWiseReport">
   <button (click)="generatePDF('wingWiseReport')">Wing Wise Report</button>
+  Delivery Status:<h3>{{deliveryStatus}}</h3>
+   <button (click)="delivered()" *ngIf="deliveryStatus == 'pending'">Click If delivered</button>
+  
   <table class="table table-striped table-bordered">
     <thead>
       <tr>

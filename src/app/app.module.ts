@@ -7,8 +7,9 @@ import { ReportModule } from './report/report.module';
 import { SharedModule } from './shared/shared.module';
 import { RouterModule} from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { ReportsHomeComponent } from './report/reports-home/reports-home.component';
+import { BillingModule } from './billing/billing.module';
 @NgModule({
   declarations: [
     AppComponent
@@ -17,6 +18,7 @@ import { ReportsHomeComponent } from './report/reports-home/reports-home.compone
     BrowserModule,
     ReportModule,
     SharedModule,
+    BillingModule,
     HttpClientModule,
     NgbModule,
     RouterModule.forRoot([
