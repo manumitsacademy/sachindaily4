@@ -1,3 +1,13 @@
-<p>
-  billing-home works!
-</p>
+<table class="table table-stripped table-bordered">
+  <tr *ngFor="let mobileNumber of mobileNumbers">
+    <td>{{mobileNumber.mobileNumber}}</td>
+    <td *ngFor="let productid of productIds">
+      <span>
+        {{mobileNumber.mobileNumber}}----{{productid}}
+        {{deliveredProductsData[mobileNumber.mobileNumber][productid]|json}}
+      </span>
+           
+    </td>
+  </tr>
+
+</table>
