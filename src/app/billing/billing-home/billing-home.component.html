@@ -1,20 +1,33 @@
-<table class="table table-striped table-bordered">
+<button (click)="generatePDF('monthBillReport')">
+  Download Monthly Billing Report
+  <i class="fa fa-download" aria-hidden="true"></i>
+</button>
+<br/>
+<br/>
+<table class="table table-striped table-bordered" id="monthBillReport">
   <thead>
     <tr>
-      <th>Mobile Number</th>
+      <th>Customer Details</th>
       <th *ngFor="let productid of productIds">{{products[productid].productName}}</th>
       <th>Total Bill</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let mobileNumber of mobileNumbers">
-      <td>{{mobileNumber.mobileNumber}}</td>
+    <tr *ngFor="let customer of customerDetails">
+      <td>
+        Name:{{cS.allUsers[customer.mobileNumber][0].name}}<br> 
+        MobileNumber:{{customer.mobileNumber}}<br> 
+        Address:
+        {{cS.allUsers[customer.mobileNumber][0].wing}},
+        {{cS.allUsers[customer.mobileNumber][0].flatNumber}},
+        {{cS.allUsers[customer.mobileNumber][0].societyName}}
+      </td>
       <td *ngFor="let productid of productIds">
         <span>
-          <app-product-bill [product]="deliveredProductsData[mobileNumber.mobileNumber][productid]"></app-product-bill>
+          <app-product-bill [product]="deliveredProductsData[customer.mobileNumber][productid]"></app-product-bill>
         </span>           
       </td>
-      <th>{{monthBill(mobileWiseData[mobileNumber.mobileNumber])}}</th>
+      <th>{{monthBill(mobileWiseData[customer.mobileNumber])}}</th>
     </tr>
   </tbody>
 </table>

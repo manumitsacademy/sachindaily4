@@ -18,6 +18,7 @@ export class WingWiseReportComponent implements OnInit {
               public dS:DeliveryService) { }
   deliveryStatus;
   deliveryStatusFlag;
+  
   generatePDF(s){
     html2canvas(document.getElementById(s)).then((canvas)=>{
       // Few necessary setting options  
@@ -31,8 +32,7 @@ export class WingWiseReportComponent implements OnInit {
       var position = 0;  
       pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)  
       pdf.save('MYPdf.pdf'); // Generated PDF 
-    })
-    
+    })    
   }
   wingWiseData={};
   wingWiseQuantity={};
@@ -45,7 +45,8 @@ export class WingWiseReportComponent implements OnInit {
   selectedDate;
   ngOnInit() {
     this.aR.queryParams.subscribe((res)=>{
-      this.selectedDate=((new Date(res.year,res.month-1,res.day)).getTime())/1000;
+      console.log(res)
+      this.selectedDate=(Date.UTC(res.year,res.month-1,res.day)/1000);//).getTime())
       console.log(this.selectedDate);
       this.selectedDateSubscriptions();
       this.getDeliveryStatus(this.selectedDate);
@@ -66,61 +67,65 @@ export class WingWiseReportComponent implements OnInit {
     })
   }
   selectedDateSubscriptions(){
-    this.wingWiseData={};
-    this.wingWiseQuantity={};
-    this.wingFlatWiseData={};
-    this.products=[];
-    this.wings=[];
-    this.productWiseData={};
-    this.finalWingWiseReport=[];
-    this.subscriptions=[];
-    this.reportService.getAllSubscriptions(this.selectedDate).subscribe((subscriptions)=>{
-      this.subscriptions=subscriptions;
-      subscriptions.forEach((i,index)=>{
-        var key;
-        var ar = [];
-        console.log(i.wing)
-        if(this.wingWiseData[i.wing]==undefined){                   
-            this.wingWiseData[i.wing]=[];        
-        }
-        this.wingWiseData[i.wing].push(i);
-      })
-
-      for(let key in this.wingWiseData){ 
-        var ar = this.wingWiseData[key].map((a)=>{
-          if(this.products.indexOf(a['productId'])==-1){
-            this.products.push(a['productId'])
-            this.productWiseData[a['productId']]={'name':a['productName'],'quantity':a['quantity']}
-          } 
-          else{
-            this.productWiseData[a['productId']].quantity+=a['quantity'];
-          }   
-          return {[a['productId']]:a['quantity']}
-        })
-        this.wingWiseQuantity[key] = ar;         
-      }
-      console.log("this.productWiseData",this.productWiseData);
-      for(let wing in this.wingWiseQuantity){
-        this.finalWingWiseReport.push({'wing':wing})
-        this.wings.push(wing);
-        for(let i=0;i<this.products.length;i++){
-          let q=0;
-          for(let j=0;j<this.wingWiseQuantity[wing].length;j++){
-            if(this.wingWiseQuantity[wing][j][this.products[i]]){
-              q=q+this.wingWiseQuantity[wing][j][this.products[i]];                            
-            }
+    this.reportService.filteredSubscriptions(this.selectedDate)
+    .then((res)=>{
+      console.log(res)
+      this.wingWiseData={};
+      this.wingWiseQuantity={};
+      this.wingFlatWiseData={};
+      this.products=[];
+      this.wings=[];
+      this.productWiseData={};
+      this.finalWingWiseReport=[];
+      this.subscriptions=[];
+        this.subscriptions=res;
+        res.forEach((i,index)=>{
+          var key;
+          var ar = [];
+          console.log(i.wing)
+          if(this.wingWiseData[i.wing]==undefined){                   
+              this.wingWiseData[i.wing]=[];        
           }
-          this.finalWingWiseReport[this.finalWingWiseReport.length-1][this.products[i]]=q;
+          this.wingWiseData[i.wing].push(i);
+        })
+
+        for(let key in this.wingWiseData){ 
+          var ar = this.wingWiseData[key].map((a)=>{
+            if(this.products.indexOf(a['productId'])==-1){
+              this.products.push(a['productId'])
+              this.productWiseData[a['productId']]={'name':a['productName'],'quantity':a['quantity']}
+            } 
+            else{
+              this.productWiseData[a['productId']].quantity+=a['quantity'];
+            }   
+            return {[a['productId']]:a['quantity']}
+          })
+          this.wingWiseQuantity[key] = ar;         
         }
-      }
-      this.finalWingWiseReport.map((w,i)=>{
-        
-      })
-      console.log("this.wingWiseData",this.wingWiseData)
-      console.log("this.wingWiseQuantity",this.wingWiseQuantity)
-      console.log("subscriptions",this.subscriptions)
-      console.log("finalWingWiseReport",this.finalWingWiseReport)
+        console.log("this.productWiseData",this.productWiseData);
+        for(let wing in this.wingWiseQuantity){
+          this.finalWingWiseReport.push({'wing':wing})
+          this.wings.push(wing);
+          for(let i=0;i<this.products.length;i++){
+            let q=0;
+            for(let j=0;j<this.wingWiseQuantity[wing].length;j++){
+              if(this.wingWiseQuantity[wing][j][this.products[i]]){
+                q=q+this.wingWiseQuantity[wing][j][this.products[i]];                            
+              }
+            }
+            this.finalWingWiseReport[this.finalWingWiseReport.length-1][this.products[i]]=q;
+          }
+        }
+        this.finalWingWiseReport.map((w,i)=>{
+          
+        })
+        console.log("this.wingWiseData",this.wingWiseData)
+        console.log("this.wingWiseQuantity",this.wingWiseQuantity)
+        console.log("subscriptions",this.subscriptions)
+        console.log("finalWingWiseReport",this.finalWingWiseReport)
+      
     })
+    /**/
   }
   getProductNameById(id){
     this.reportService.getProductDetailsById(id).subscribe((res)=>{

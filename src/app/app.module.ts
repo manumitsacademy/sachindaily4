@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { ReportsHomeComponent } from './report/reports-home/reports-home.component';
 import { BillingModule } from './billing/billing.module';
+import { CustomerModule } from './customer/customer.module';
 @NgModule({
   declarations: [
     AppComponent
@@ -24,9 +25,10 @@ import { BillingModule } from './billing/billing.module';
     RouterModule.forRoot([
     ]),
     BrowserAnimationsModule,
-    MatTableModule
+    MatTableModule,
+    CustomerModule
   ],
-  providers: [],
+  providers: [CustomerModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
