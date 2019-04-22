@@ -14,8 +14,9 @@ export class ReportService {
   userUrl="https://api.mlab.com/api/1/databases/sachindaily/collections/user"//?q={"active": true}&fo=true&apiKey=myAPIKey"
   getAllSubscriptions(sdate){
     console.log(sdate);
-    return this.http.get(`${this.url}?q={startDate:{$lte:'${sdate}'},endDate:{$gte:'${sdate-1}'}}&s={${"wing"}:1}&apiKey=${this.apiKey}`)
+    return this.http.get(`${this.url}?q={startDate:{$lte:'${sdate}'},endDate:{$gte:'${sdate}'}}&s={${"wing"}:1}&apiKey=${this.apiKey}`)
     .pipe(map((res)=>{
+      console.log("all subscriptions",res);
       return Object.keys(res).map((i)=>{return res[i]});      
     }))
   }

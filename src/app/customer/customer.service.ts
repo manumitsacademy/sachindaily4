@@ -14,7 +14,15 @@ export class CustomerService {
     })
   }
   allUsers;
-  getAllUsers(){}
+  getCustomerList(){
+    return this.http.get(`${this.customerUrl}?${this.apiKey}`);
+  }
+  addCustomer(customer){
+    return this.http.post(`${this.customerUrl}?${this.apiKey}`,customer)
+  }
+  editCustomer(){
+
+  }
   ngOnInit(){
     
   }

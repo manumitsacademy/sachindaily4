@@ -11,6 +11,8 @@ import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { ReportsHomeComponent } from './report/reports-home/reports-home.component';
 import { BillingModule } from './billing/billing.module';
 import { CustomerModule } from './customer/customer.module';
+import { SubscriptionModule } from './subscription/subscription.module';
+import { DataService } from './data.service';
 @NgModule({
   declarations: [
     AppComponent
@@ -26,9 +28,10 @@ import { CustomerModule } from './customer/customer.module';
     ]),
     BrowserAnimationsModule,
     MatTableModule,
-    CustomerModule
+    CustomerModule,
+    SubscriptionModule
   ],
-  providers: [CustomerModule],
+  providers: [CustomerModule,DataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,59 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Subscribe Product</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <button (click)="selectedDays()">Selected Days</button>
+        <button (click)="everyDay()">Every Day</button>
+        <div class="form-group"  [formGroup]="subscribeProductForm">
+          <div *ngIf="selectedDaysFlag || everyDayFlag">
+              <label for="startDate">Selecte the Range of Dates</label>
+              <div class="input-group">
+                <label for="startDate">Selecte the Start Date</label>
+                <input id="startDate" formControlName="startDate" class="form-control" 
+                placeholder="Start Date" name="startDate" ngbDatepicker #sdate="ngbDatepicker">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary calendar fas fa-calendar-alt" 
+                  (click)="sdate.toggle()" type="button"></button>
+                </div>
+              </div>
+              <div class="input-group" *ngIf="selectedDaysFlag">
+                 <label for="endDate">Selecte the End Date</label>
+                <input id="endDate" formControlName="endDate" class="form-control"
+                 placeholder="End Date" name="endDate" ngbDatepicker #edate="ngbDatepicker">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary calendar fas fa-calendar-alt" 
+                  (click)="edate.toggle()" type="button"></button>
+                </div>
+              </div>
+          </div>
+          
+          <div class="input-group">
+              <label for="startDate">Quantity</label>
+              <button class="btn btn-outline-secondary fas fa-minus-circle"
+              (click)="minus()" type="button" [disabled]="minusDisableFlag">
+              </button>
+              <input type="text" formControlName="quantity">
+              <button class="btn btn-outline-secondary fas fa-plus-circle"
+              (click)="plus()" type="button">
+              </button>
+          </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" 
+      (click)="modal.close('Save click')" [disabled]="!subscribeProductForm.valid">Update</button>
+    </div>
+  </ng-template>
+
+  <button class="btn btn-lg btn-outline-primary" (click)="open(content)">
+    Change
+  </button>
+  <!-- 
+  <hr>
+  
+  <pre>{{closeResult}}</pre>-->
+  

@@ -1,0 +1,9 @@
+
+<img class="card-img-top" [src]="productDetails.productImageUrl" alt="Card image" style="width:150px;height:150px">
+<div class="card-body clearfix">
+  <h4 class="card-title">{{productDetails.productName}}</h4>
+  <p class="card-text">Price: {{productDetails.productPrice.cost}}</p>
+  <app-change-subscription [CustomerDetails]="customerDetails" 
+  [ProductDetails]="productDetails"></app-change-subscription>
+  <a href="#" class="btn btn-primary btn-sm float-right">Stop</a>
+</div>

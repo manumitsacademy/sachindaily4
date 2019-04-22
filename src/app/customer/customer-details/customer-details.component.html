@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="col-md-6">
+      <h5>Name:{{customerDetails.name}}</h5>
+      <h6>Contact Details:{{customerDetails.mobileNumber}},{{customerDetails.emailId}}</h6>
+      <b>
+        {{customerDetails.flatNumber}},
+        {{customerDetails.wing}} Wing,
+        {{customerDetails.societyName}},
+        {{customerDetails.city}}.<br>
+      </b>
+  </div>
+  <div class="col-md-6">      
+    <app-pause-delivery [CustomerDetails]="customerDetails" ></app-pause-delivery>
+  </div>  
+</div>
+<h3>Subscribed Products</h3>
+<div class="row">
+  <div class="card col-md-2 col-sm-6 p-2 m-3" style="width:200px" 
+  *ngFor="let product of subscribedProducts">
+    <img class="card-img-top" [src]="product.productImageUrl" alt="Card image" style="width:150px;height:150px">
+    <div class="card-body clearfix">
+      <h4 class="card-title">{{product.productName}}</h4>
+      <p class="card-text">Price: {{product.productPrice.cost}}</p>
+      <app-change-subscription [CustomerDetails]="customerDetails" 
+      [ProductDetails]="product"></app-change-subscription>
+    </div>
+  </div>
+</div>
+<h3>UnSubscribed Products</h3>
+<div class="row">
+  <div class="card col-md-2 col-sm-6 p-2 m-3" style="width:200px" 
+  *ngFor="let product of unsubscribedProducts">
+    <img class="card-img-top" [src]="product.productImageUrl" alt="Card image" style="width:150px;height:150px">
+    <div class="card-body clearfix">
+      <h4 class="card-title">{{product.productName}}</h4>
+      <p class="card-text">Price: {{product.productPrice.cost}}</p>
+      <app-subscribe-delivery [CustomerDetails]="customerDetails" 
+      [ProductDetails]="product" (refreshSubscription)="getSubscriptions()"></app-subscribe-delivery>
+    </div>
+  </div>
+</div>

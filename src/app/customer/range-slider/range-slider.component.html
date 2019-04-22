@@ -1,0 +1,9 @@
+<div class="input-group-append">
+    <button class="btn btn-outline-secondary fas fa-minus-circle"
+    (click)="minus()" type="button" [disabled]="quantiy<=0">
+    </button>
+    <input type="text" [(ngModel)]="quantiy">
+    <button class="btn btn-outline-secondary fas fa-plus-circle"
+    (click)="plus()" type="button">
+    </button>
+</div>
