@@ -20,8 +20,10 @@ export class CustomerService {
   addCustomer(customer){
     return this.http.post(`${this.customerUrl}?${this.apiKey}`,customer)
   }
-  editCustomer(){
-
+  updateCustomer(customerDetails,id){
+    return this.http
+    .put(`https://api.mlab.com/api/1/databases/sachindaily/collections/user/${id}?apiKey=ClSj0HxNv3sPJwS3cZOsbZI9exWxVjqz`,customerDetails)
+    
   }
   ngOnInit(){
     

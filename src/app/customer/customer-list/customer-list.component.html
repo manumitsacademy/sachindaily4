@@ -1,16 +1,19 @@
 <table class="table table-striped table-bordered">
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Flat Num</th>
+      <th>Name <strong>Sort</strong></th>
       <th>Mobile Number</th>
+      <th>Wing</th>
+      <th>Flat Number</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let customer of customerList">
       <td>{{customer.name}}</td>
       <td>{{customer.mobileNumber}}</td>
+      <td>{{customer.wing}}</td>
       <td>{{customer.flatNumber}}</td>
+      <td><button (click)="editCustomer(customer,customer._id.$oid)">Edit</button></td>
       <td><button (click)="deleteCustomer(customer._id.$oid)">Delete</button></td>
       <td>
         <!--<button (click)="customerDetails(customer._id.$oid)">View</button>-->

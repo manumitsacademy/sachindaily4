@@ -3,7 +3,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ProductService } from 'src/app/products/product.service';
 import { SubscriptionService } from 'src/app/subscription/subscription.service';
 import {Router} from '@angular/router'
-
+import { _ } from "underscore"
 @Component({
   selector: 'app-customer-list',
   templateUrl: './customer-list.component.html',
@@ -19,15 +19,23 @@ export class CustomerListComponent implements OnInit {
     .get("https://api.mlab.com/api/1/databases/sachindaily/collections/user?apiKey=ClSj0HxNv3sPJwS3cZOsbZI9exWxVjqz")
     .subscribe((res)=>{
       console.log(res)
-      this.customerList = res;
+      var x = _.groupBy(res,'wing');
+      this.customerList=(_.map(x,(a)=>{return a.sort(function(i,j){ return Number(i.flatNumber)-Number(j.flatNumber)});}))
+                        .flat();
+      console.log(this.customerList);
     })
   }
   deleteCustomer(myId){
     this.http
     .delete(`https://api.mlab.com/api/1/databases/sachindaily/collections/user/${myId}?apiKey=ClSj0HxNv3sPJwS3cZOsbZI9exWxVjqz`)
     .subscribe((res)=>{
+      alert("Customer Deleted Successfully")
       this.getAllCustomers();
     })
+  }
+  editCustomer(customer,myId){
+    customer._id=myId;
+    this.router.navigate(['/customer/editCustomer'],{queryParams: customer })
   }
   customerDetails(id){
     this.router.navigate(["customer/customerDetails"])
@@ -36,3 +44,4 @@ export class CustomerListComponent implements OnInit {
   }
 
 }
+//

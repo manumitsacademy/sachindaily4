@@ -14,8 +14,10 @@ import { SubscribeDeliveryComponent } from './subscribe-delivery/subscribe-deliv
 import { RangeSliderComponent } from './range-slider/range-slider.component';
 import { ChangeSubscriptionComponent } from './change-subscription/change-subscription.component';
 import { ProductCardComponent } from './product-card/product-card.component';
+import { EditCustomerComponent } from './edit-customer/edit-customer.component';
+import { PauseSelectedSubscriptionComponent } from './pause-selected-subscription/pause-selected-subscription.component';
 @NgModule({
-  declarations: [CustomerHomeComponent, RangeSliderComponent, CustomerListComponent,AddCustomerComponent, CustomerDetailsComponent, PauseDeliveryComponent, SubscribeDeliveryComponent, ChangeSubscriptionComponent, ProductCardComponent],
+  declarations: [CustomerHomeComponent, RangeSliderComponent, CustomerListComponent,AddCustomerComponent, CustomerDetailsComponent, PauseDeliveryComponent, SubscribeDeliveryComponent, ChangeSubscriptionComponent, ProductCardComponent, EditCustomerComponent, PauseSelectedSubscriptionComponent],
   imports: [
     NgbModule,
     CommonModule,
@@ -34,6 +36,10 @@ import { ProductCardComponent } from './product-card/product-card.component';
           {
             path:'addCustomer',
             component:AddCustomerComponent
+          },
+          {
+            path:'editCustomer',
+            component:EditCustomerComponent
           },
           {
             path:'customerDetails',

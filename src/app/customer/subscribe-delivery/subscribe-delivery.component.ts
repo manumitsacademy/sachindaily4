@@ -89,12 +89,10 @@ export class SubscribeDeliveryComponent implements OnInit {
     this.everyDayFlag=false;
     this.selectedDaysFlag=true;
     this.subscribeProductForm.controls['endDate'].setValue("");
-    this.subscribeProductForm.reset();
-  }
+    this.subscribeProductForm.reset();  }
   everyDay(){
     this.selectedDaysFlag=false;
     this.everyDayFlag=true;
-    this.subscribeProductForm.reset();
     this.subscribeProductForm.controls['endDate'].setValue("4054060800")
   }
 }

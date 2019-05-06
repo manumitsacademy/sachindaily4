@@ -21,8 +21,27 @@ export class WingWiseReportComponent implements OnInit {
   
   generatePDF(s){
     html2canvas(document.getElementById(s)).then((canvas)=>{
+      const imgData = canvas.toDataURL('image/png')
+      var imgWidth = 210; 
+      var pageHeight = 295;  
+      var imgHeight = canvas.height * imgWidth / canvas.width;
+      var heightLeft = imgHeight;
+
+      var doc = new jspdf('p', 'mm');
+      var position = 0;
+
+      doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight;
+        doc.addPage();
+        doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+      }
+      doc.save( 'file.pdf');
       // Few necessary setting options  
-      var imgWidth = 208;   
+      /*var imgWidth = 208;   
       var pageHeight = 295;    
       var imgHeight = canvas.height * imgWidth / canvas.width;  
       var heightLeft = imgHeight;  
@@ -31,7 +50,7 @@ export class WingWiseReportComponent implements OnInit {
       let pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF  
       var position = 0;  
       pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)  
-      pdf.save('MYPdf.pdf'); // Generated PDF 
+      pdf.save('MYPdf.pdf'); // Generated PDF */
     })    
   }
   wingWiseData={};
@@ -43,6 +62,7 @@ export class WingWiseReportComponent implements OnInit {
   finalWingWiseReport=[];
   subscriptions;
   selectedDate;
+  grandTotal=0;
   ngOnInit() {
     this.aR.queryParams.subscribe((res)=>{
       console.log(res)
@@ -67,6 +87,7 @@ export class WingWiseReportComponent implements OnInit {
     })
   }
   selectedDateSubscriptions(){
+    this.grandTotal=0;
     this.reportService.filteredSubscriptions(this.selectedDate)
     .then((res)=>{
       console.log(res)
@@ -116,14 +137,23 @@ export class WingWiseReportComponent implements OnInit {
             this.finalWingWiseReport[this.finalWingWiseReport.length-1][this.products[i]]=q;
           }
         }
-        this.finalWingWiseReport.map((w,i)=>{
-          
-        })
+        this.finalWingWiseReport.map((w,i)=>{})
         console.log("this.wingWiseData",this.wingWiseData)
         console.log("this.wingWiseQuantity",this.wingWiseQuantity)
+
         console.log("subscriptions",this.subscriptions)
+        var x = _.groupBy(this.subscriptions,'wing');
+        this.subscriptions=(_.map(x,(a)=>{return a.sort(function(i,j){ return Number(i.flatNumber)-Number(j.flatNumber)});}))
+                          .flat();
+        console.log(this.subscriptions);
         console.log("finalWingWiseReport",this.finalWingWiseReport)
-      
+         
+       _.mapObject(this.productWiseData,(a,b)=>{        
+        console.log(a.quantity,b)
+         this.grandTotal+=a.quantity;
+         console.log(this.grandTotal)
+         return a;
+       })
     })
     /**/
   }

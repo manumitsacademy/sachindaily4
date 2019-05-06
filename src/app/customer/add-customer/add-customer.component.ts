@@ -25,7 +25,10 @@ export class AddCustomerComponent implements OnInit {
   }
   addCustomer(){
     console.log(this.customerForm.value)
-    this.cS.addCustomer(this.customerForm.value).subscribe((res)=>{console.log(res)})
+    this.cS.addCustomer(this.customerForm.value).subscribe((res)=>{
+      alert("customer added successfully")
+      console.log(res);
+    })
   }
   ngOnInit() {
   }

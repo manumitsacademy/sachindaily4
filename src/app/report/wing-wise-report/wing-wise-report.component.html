@@ -28,6 +28,7 @@
       <tr>
         <th>Total</th>
         <th *ngFor="let product of products">{{productWiseData[product].quantity}}</th>
+        <th>{{grandTotal}}</th>
       </tr>
     </tfoot>
   </table>
