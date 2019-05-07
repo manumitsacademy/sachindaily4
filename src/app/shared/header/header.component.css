@@ -1,0 +1,33 @@
+img{
+    width: 90px;
+     background: none;
+     height: 60px;
+     padding: 10px;
+    display: block;
+        margin-left: 30px;
+    
+    }
+    .nav-link{
+        margin-top: 2px;
+    }
+    .navbar-dark .navbar-nav .active>.nav-link:link {
+        color: white;
+      }
+      
+      /* visited link */
+      .navbar-dark .navbar-nav .active>.nav-link:visited {
+        color: white;
+      }
+      
+      /* mouse over link */
+      .navbar-dark .navbar-nav .active>.nav-link:hover {
+        
+        color: white;
+        background:#16B87D;
+      }
+      
+      /* selected link */
+      .navbar-dark .navbar-nav .active>.nav-link:active {
+        color: yellow;
+        background: rgb(255, 218, 96);
+      } 

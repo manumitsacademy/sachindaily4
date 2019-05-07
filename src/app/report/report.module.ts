@@ -9,11 +9,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { ProductnamePipe } from './productname.pipe';
 import {MatTableModule} from '@angular/material/table';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
   declarations: [ReportsHomeComponent, WingWiseReportComponent, FlatWiseReportComponent, ProductnamePipe],
   imports: [
-    CommonModule,HttpClientModule,MatTableModule,FormsModule,NgbModule,
+    CommonModule,HttpClientModule,MatTableModule,FormsModule,NgbModule,MatTabsModule,MatButtonModule,
     RouterModule.forChild([
       {
         path:'reports',

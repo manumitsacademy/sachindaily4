@@ -1,0 +1,12 @@
+i.fa.fa-download{
+    float:right;
+    color: blue;
+}
+h3{
+    display: inline-block;
+}
+button.mat-raised-button.mat-primary.ng-star-inserted{
+line-height: 28px;
+margin: -2px;
+vertical-align: middle;
+}

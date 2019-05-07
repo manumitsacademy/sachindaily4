@@ -13,6 +13,9 @@ import { BillingModule } from './billing/billing.module';
 import { CustomerModule } from './customer/customer.module';
 import { SubscriptionModule } from './subscription/subscription.module';
 import { DataService } from './data.service';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatButtonModule} from '@angular/material/button';
 @NgModule({
   declarations: [
     AppComponent
@@ -20,6 +23,9 @@ import { DataService } from './data.service';
   imports: [
     BrowserModule,
     ReportModule,
+    MatTabsModule,
+    MatMenuModule,
+    MatButtonModule,
     SharedModule,
     BillingModule,
     HttpClientModule,
