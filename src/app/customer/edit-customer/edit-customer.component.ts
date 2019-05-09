@@ -35,7 +35,7 @@ export class EditCustomerComponent implements OnInit {
     .subscribe((res)=>{
       console.log(res);
       alert("Customer Details Updated Successfully")
-      this.router.navigate(["/customer/customerList"])
+      this.router.navigate(["/home/customer/customerList"])
     })
   }
   ngOnInit() {

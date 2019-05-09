@@ -4,16 +4,25 @@ import { BillingHomeComponent } from './billing-home/billing-home.component';
 import { routes} from './routes.billing'
 import { RouterModule } from '@angular/router';
 import { ProductBillComponent } from '../products/product-bill/product-bill.component'
+import { HomeComponent } from '../home/home.component';
+import { AuthGuard } from '../auth.guard';
+
 @NgModule({
   declarations: [BillingHomeComponent,ProductBillComponent],
   imports: [
     CommonModule,
-    RouterModule.forChild([
-      {
-        path:"billing",
-        component:BillingHomeComponent
-      }
-    ])
+    RouterModule.forChild(
+      [{
+        path: 'home', component: HomeComponent,canActivate: [AuthGuard],
+        children:
+          [
+            {
+              path: "billing",
+              component: BillingHomeComponent,
+              canActivate: [AuthGuard]
+            }
+          ]
+      }])
   ]
 })
 export class BillingModule { }

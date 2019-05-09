@@ -16,6 +16,8 @@ import { ChangeSubscriptionComponent } from './change-subscription/change-subscr
 import { ProductCardComponent } from './product-card/product-card.component';
 import { EditCustomerComponent } from './edit-customer/edit-customer.component';
 import { PauseSelectedSubscriptionComponent } from './pause-selected-subscription/pause-selected-subscription.component';
+import { HomeComponent } from '../home/home.component';
+import { AuthGuard } from '../auth.guard';
 @NgModule({
   declarations: [CustomerHomeComponent, RangeSliderComponent, CustomerListComponent,AddCustomerComponent, CustomerDetailsComponent, PauseDeliveryComponent, SubscribeDeliveryComponent, ChangeSubscriptionComponent, ProductCardComponent, EditCustomerComponent, PauseSelectedSubscriptionComponent],
   imports: [
@@ -25,29 +27,37 @@ import { PauseSelectedSubscriptionComponent } from './pause-selected-subscriptio
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forChild([
-      {
-        path:'customer',
-        component:CustomerHomeComponent,
-        children:[
+      {        path: 'home', component: HomeComponent,canActivate: [AuthGuard],
+              children:
+
+        [
           {
-            path:'customerList',
-            component:CustomerListComponent
-          },
-          {
-            path:'addCustomer',
-            component:AddCustomerComponent
-          },
-          {
-            path:'editCustomer',
-            component:EditCustomerComponent
-          },
-          {
-            path:'customerDetails',
-            component:CustomerDetailsComponent
-          },
-          {
-            path:"",
-            component:CustomerListComponent
+              path:'customer',
+              component:CustomerHomeComponent,
+              canActivate: [AuthGuard],
+              children:[
+                {
+                  path:'customerList',
+                  component:CustomerListComponent,
+                  canActivate: [AuthGuard]
+                },
+                {
+                  path:'addCustomer',
+                  component:AddCustomerComponent,
+                  canActivate: [AuthGuard]
+
+                },
+                {
+                  path:'customerDetails',
+                  component:CustomerDetailsComponent,
+                  canActivate: [AuthGuard]
+                },
+                {
+                  path:"",
+                  component:CustomerListComponent,
+                  canActivate: [AuthGuard]
+                }
+              ]
           }
         ]
       }

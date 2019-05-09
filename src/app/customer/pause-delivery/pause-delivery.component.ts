@@ -32,7 +32,7 @@ export class PauseDeliveryComponent{
       this.sS.pauseDelivery(this.pauseDeliveryForm.value).subscribe((res)=>{
         console.log(res);
         alert("All deliveries paused at given dates");
-        this.router.navigate(["/customer/customerList"])
+        this.router.navigate(["/home/customer/customerList"])
       })
     }
   open(content) {

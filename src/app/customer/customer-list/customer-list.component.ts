@@ -35,10 +35,10 @@ export class CustomerListComponent implements OnInit {
   }
   editCustomer(customer,myId){
     customer._id=myId;
-    this.router.navigate(['/customer/editCustomer'],{queryParams: customer })
+    this.router.navigate(['/home/customer/editCustomer'],{queryParams: customer })
   }
   customerDetails(id){
-    this.router.navigate(["customer/customerDetails"])
+    this.router.navigate(["/home/customer/customerDetails"])
   }
   ngOnInit() {
   }
